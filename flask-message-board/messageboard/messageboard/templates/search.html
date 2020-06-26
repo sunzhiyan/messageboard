@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block title %}查询{% endblock %}
+
+<meta charset="UTF-8">
+{% block content %}
+    <div class="page-header">
+        <div class="container">
+            <h1>查询</h1>
+        </div>
+
+    </div>
+    <div class="container">
+        <form method="post" id="loginform">
+            {{ wtf.quick_form(form) }}
+        </form>
+    </div>
+    <div>
+        <ul class="Message">
+            <h4>{% for message in messages%}
+                <li>
+                    <div>
+                        {{message.user.username}}
+                        <div style="text-align: right;">{{message.timestamp}}</div>
+                    </div>
+                    <div>
+                        {{message.msg}}
+                    </div>
+                    <br>
+                </li>
+                {% endfor %}
+            </h4>
+        </ul>
+    </div>
+{% endblock %}
+
