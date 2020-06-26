@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+<html>
+<head>
+    <title>{% block title %}首页{% endblock %}</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    {% block content %}
+        <div class="page-header">
+            <div class="container">
+                <h1>
+                    欢迎进入留言板,
+                    {% if current_user.is_authenticated %}
+                    {{current_user.username}}
+                    {% else %}
+                    请登录
+                    {% endif %}
+                </h1>
+            </div>
+            <div class="container">
+                <h3>
+                    {% for message in get_flashed_messages() %}
+                    {{ message }}
+                    {% endfor %}
+                </h3>
+            </div>
+        </div>
+
+        <div class="container">
+            <form method="post" id="bbsform" accept-charset="utf-8" onsubmit="document.charset='utf-8'">
+                {{ wtf.quick_form(form) }}
+            </form>
+        </div>
+
+        <div class="container">
+            <ul class="Message">
+                <h4>
+                    {% for message in paginate.items%}
+                        <li>
+                            <div>
+                                {{message.user.username}}
+                                <div style="text-align: right;">{{message.timestamp}}</div>
+                            </div>
+                            <div>
+                                {{message.msg}}
+                            </div>
+                            <br>
+                        </li>
+                    {% endfor %}
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+
+                            总页数：{{ paginate.pages }}
+                            数据总条数:{{ paginate.total }}
+                            当前页数:{{ paginate.page }}
+                            <a href="/?page=1">首页</a>
+                            {% if paginate.has_prev %}
+                                <a href="/?page={{ paginate.prev_num }}">上一页</a>
+                            {% endif %}
+                            {% if paginate.has_next %}
+                                <a href="/?page={{ paginate.next_num }}">下一页</a>
+                            {% endif %}
+                            <a href="/?page={{paginate.pages}}">尾页</a>
+                            页码:
+                            {% for i in paginate.iter_pages() %}
+                                <a href="/?page={{ i }}">{{ i }}</a>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                </h4>
+            </ul>
+            </div>
+    {% endblock %}
+</body>
+</html>
+
+
+

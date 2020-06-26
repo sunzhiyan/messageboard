@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "bootstrap/base.html" %}
+<html>
+<head>
+    <title>{% block title %}留言板{% endblock %}</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    {% block navbar %}
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">留言板</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">主页</a></li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ url_for('reglogin_view.search') }}">查询</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('reglogin_view.person') }}">个人中心</a></li>
+                    <li><a href="{{ url_for('reglogin_view.logout') }}">注销</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('reglogin_view.login') }}">登录</a></li>
+                    <li><a href="{{ url_for('reglogin_view.register') }}">注册</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
